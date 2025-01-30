@@ -9,8 +9,10 @@ const Home = () => {
   const [totearning, setEarning] = useState(0);
   const [totprofit, setTotprofit] = useState(0);
 
+  const URL = "https://inventory-backend-igds.onrender.com"
+  //http://localhost:5600/inventory/data
   const getdata = () => {
-    axios.get('http://localhost:5600/inventory/data')
+    axios.get(`${URL}/inventory/data`)
       .then((response) => {
         const products = response.data;
         const totalProducts = products.reduce((acc, item) => acc + item.quantity, 0);

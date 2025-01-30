@@ -6,8 +6,10 @@ const BillView = () => {
   const [bills, setBills] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
+  const URL = "https://inventory-backend-igds.onrender.com"
+  //http://localhost:5600/bill/get
   useEffect(() => {
-    axios.get('http://localhost:5600/bill/get')
+    axios.get(`${URL}/bill/get`)
       .then((response) => {
         setBills(response.data);
       })

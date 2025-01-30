@@ -21,8 +21,10 @@ const Bill = () => {
   const [cp, setCp] = useState(0);
   const [price, setPrice] = useState('');
 
+  const URL = "https://inventory-backend-igds.onrender.com"
+  //http://localhost:5600/inventory/data
   const getdata = () => {
-    axios.get("http://localhost:5600/inventory/data")
+    axios.get(`${URL}/inventory/data`)
       .then((res) => {
         setData(res.data);
       });
@@ -67,7 +69,7 @@ const Bill = () => {
       particulars: billItems,
       total: totalAmount
     };
-    axios.post("http://localhost:5600/bill/create", newdata)
+    axios.post(`${URL}/bill/create`, newdata)
       .then((res) => {
         if (res.status === 201) {
           toast.success("Bill created successfully");

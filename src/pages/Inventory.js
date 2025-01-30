@@ -31,19 +31,20 @@ const Inventory = () => {
   const [sp, setSp] = useState(0);
   const [id, setId] = useState();
   const [newCategory, setNewCategory] = useState('');
-
+  const URL = "https://inventory-backend-igds.onrender.com"
+  //http://localhost:5600/inventory/data
   const getdata = () => {
-    axios.get('http://localhost:5600/inventory/data')
+    axios.get(`${URL}/inventory/data`)
       .then(response => {
         setInventory(response.data);
       })
       .catch((e) => { console.log(e) });
-    axios.get('http://localhost:5600/inventory/category')
+    axios.get(`${URL}/inventory/category`)
       .then(response => {
         setCategories(response.data);
       })
       .catch((e) => { console.log(e) });
-    axios.get("http://localhost:5600/api/last-updated")
+    axios.get(`${URL}/api/last-updated`)
       .then((res) => {
         const updates = convertGMTtoIST(res.data.lastUpdated);
         setLastupdate(updates);
@@ -75,7 +76,7 @@ const Inventory = () => {
       return;
     }
     const data = { name: itemname, category: category, quantity: quantity, costprice: cp, sellingprice: sp };
-    axios.post('http://localhost:5600/inventory/add', data)
+    axios.post(`${URL}/inventory/add`, data)
       .then((res) => {
         if (res.status === 201) {
           getdata();
@@ -85,7 +86,7 @@ const Inventory = () => {
   };
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:5600/inventory/delete/${id}`)
+    axios.delete(`${URL}/inventory/delete/${id}`)
       .then((res) => {
         if (res.status === 200) {
           getdata();
@@ -95,7 +96,7 @@ const Inventory = () => {
   };
 
   const getupdatedata = (id) => {
-    axios.get(`http://localhost:5600/inventory/find/${id}`)
+    axios.get(`${URL}/inventory/find/${id}`)
       .then((res) => {
         setUpdatedata(res.data);
       });
@@ -116,7 +117,7 @@ const Inventory = () => {
   const handleUp = (e) => {
     e.preventDefault();
     const data = { name: itemname, category: category, quantity: quantity, costprice: cp, sellingprice: sp };
-    axios.put(`http://localhost:5600/inventory/update/${id}`, data)
+    axios.put(`${URL}/inventory/update/${id}`, data)
       .then((res) => {
         if (res.status === 200) {
           getdata();
@@ -134,7 +135,7 @@ const Inventory = () => {
 
   const handleAddCategory = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:5600/inventory/addcategory', { category: newCategory })
+    axios.post(`${URL}/inventory/addcategory`, { category: newCategory })
       .then((res) => {
         if (res.status === 201) {
           getdata();
