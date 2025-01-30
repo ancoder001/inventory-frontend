@@ -10,22 +10,23 @@ const ProfitChart = () => {
   const [monthlyProfit, setMonthlyProfit] = useState(0);
   const [categoryProfits, setCategoryProfits] = useState({});
 
+  const URL = "https://inventory-backend-igds.onrender.com"
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const dbill=await axios.get("http://localhost:5600/bill/get");
+        const dbill=await axios.get(`${URL}/bill/get`);
         setBills(dbill.data.slice(-5));
 
-        const dailyResponse = await axios.get('http://localhost:5600/profit/daily');
+        const dailyResponse = await axios.get(`${URL}/profit/daily`);
         setDailyProfit(dailyResponse.data.profit);
 
-        const weeklyResponse = await axios.get('http://localhost:5600/profit/weekly');
+        const weeklyResponse = await axios.get(`${URL}/profit/weekly`);
         setWeeklyProfit(weeklyResponse.data.profit);
 
-        const monthlyResponse = await axios.get('http://localhost:5600/profit/monthly');
+        const monthlyResponse = await axios.get(`${URL}/profit/monthly`);
         setMonthlyProfit(monthlyResponse.data.profit);
 
-        const categoryResponse = await axios.get('http://localhost:5600/profit/category');
+        const categoryResponse = await axios.get(`${URL}/profit/category`);
         setCategoryProfits(categoryResponse.data.categoryProfits);
       } catch (error) {
         console.error('Error fetching profit data:', error);
